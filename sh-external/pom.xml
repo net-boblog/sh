@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.qccr.sh</groupId>
+    <artifactId>sh</artifactId>
+    <version>0.0.2</version>
+  </parent>
+  <groupId>com.qccr.sh</groupId>
+  <artifactId>sh-external</artifactId>
+  <version>0.0.2</version>
+  <name>sh-external</name>
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+
+    <!-- slf4j门面-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <!-- jcl到slf4j的桥接器-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.sh</groupId>
+      <artifactId>sh-common</artifactId>
+      <version>0.0.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.toowell</groupId>
+      <artifactId>carman-remote</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.merchantcenter</groupId>
+      <artifactId>merchantcenter-facade</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.toowell.membercenter</groupId>
+      <artifactId>membercenter-facade</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.ordercenter</groupId>
+      <artifactId>ordercenter-facade</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.marketcenter</groupId>
+      <artifactId>marketcenter-facade</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.gotone</groupId>
+      <artifactId>gotone-sms</artifactId>
+      <version>1.2.0.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.qccr.commons</groupId>
+      <artifactId>knife</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>

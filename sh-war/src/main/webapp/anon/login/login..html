@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../../common/init.jsp"%>
+    <%
+String path = request.getContextPath();
+String basePath = request.getScheme() +"://" + 
+  request.getServerName() + ":" +
+          request.getServerPort() + 
+          path +"/";
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/login.css"/>
+<script src="<%=ctx%>/common/jquery/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript">
+	var ctx = '<%=ctx%>';
+</script>
+<script type="text/javascript" src="../../common/md5.js"></script>
+<script src="./login.js" type="text/javascript"></script>
+<script src="../addon/link.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	if($(".perror").text()==""){
+		$(".perror").hide();
+	}else{
+		$(".perror").show();
+	}
+	
+})
+</script>	
+
+<title>登录</title>
+<meta charset="UTF-8">
+</head>
+
+<body>
+<form id="loginForm" action="login.s" method="post">
+	<div class="header"><div class="logo"><img src="../../images/login_logo.png"/><p></p></div><div class="h_number"><img src="../../images/phone_num.png"/></div></div>
+	<div class="login_box">
+	  <div class="login_main">
+	    <div class="denglc">
+	    <h5>商家登录</h5>
+	    <div class="perrow_tishi"><img src="../../images/yichang_icon.png"/>请输入正确密码</div>
+	    <div class="zhanghao"><input  type="text" class="yj" id="username" name="username"/></div>
+	    <div class="password"><input type="text" class="yj" id="password" name="password"/></div>
+	    <a href="#" class="log_btn yj">登 录</a>
+	    <div class="log_bottom"><a href="<%=basePath%>anon/apply/apply_join.s" class="no_account">没有账号？申请加盟</a><a href="<%=basePath%>anon/apply/check_username.jsp" class="forget_password">忘记密码？</a></div>
+	    </div>
+	  </div>
+	</div>
+</form>
+</body>
+</html>

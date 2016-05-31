@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qccr.sh.dao.ApplyToJoinDao">
+
+ 	<insert id="insertSh_user_apply"  >
+ 		insert into sh_user_apply (store_name,store_owner,store_tel,province,city,areaId,store_addr_detail,
+ 		store_square,store_staff_num,store_age,store_main_brand,cooperation_item,apply_time)values
+ 		(#{storeName,jdbcType=VARCHAR},
+ 		#{store_owner,jdbcType=VARCHAR},
+ 		#{store_tel,jdbcType=VARCHAR},
+		#{province,jdbcType=INTEGER},
+		#{city,jdbcType=INTEGER},
+		#{areaId,jdbcType=INTEGER},
+		#{store_addr_detail,jdbcType=VARCHAR},
+		#{store_square,jdbcType=VARCHAR},
+		#{store_staff_num,jdbcType=VARCHAR},
+		#{store_age,jdbcType=VARCHAR}, 	
+		#{store_main_brand,jdbcType=VARCHAR},
+		#{cooperation_item,jdbcType=VARCHAR},
+ 		now())
+ 	
+ 	</insert>
+ 	<select id="selectId" resultType="int">SELECT LAST_INSERT_ID()</select>
+ 	
+ 	
+ 	<insert id="insertSh_service_mapping"  >
+ 		insert into sh_user_service_mapping (id,serviceid) values 
+ 		<foreach collection="serviceid" item="item" index ="index"
+             separator=",">
+           ( #{id, jdbcType=INTEGER},#{item})
+     	</foreach >
+ 	</insert>
+ 	
+ 	<!--根据服务查询省份-->
+  <select id="allProvice" parameterType="int"  resultType="java.util.HashMap">
+  	select distinct tstore.provinces id,area.area_name areaName from tstore,tmerchandise,area where 1=1 and tstore.pkid=tmerchandise.store_id
+  	and area.id=tstore.provinces
+  	and tstore.status=2
+  	and tstore.is_delete='N'
+  	and tstore.is_marketable=1
+  	<if test="serverId!=0">
+  		 and tmerchandise.twofenlei=#{serverId} 
+  	</if>
+  	<if test="serverId==0">
+  		and tmerchandise.twofenlei in ('13','14','15') 
+  	</if>
+  	and tmerchandise.status=1
+  </select>
+ 	<!--根据省份和服务查询城市-->
+  <select id="selectCitysByProvince" resultType="java.util.HashMap">
+  	select distinct tstore.city id,area.area_name areaName from tstore,tmerchandise,area where 1=1 and tstore.pkid=tmerchandise.store_id 
+  	and area.id=tstore.city
+  	and tstore.status=2
+  	and tmerchandise.status=1
+  	<if test="serverId!=0">
+  		 and tmerchandise.twofenlei=#{serverId} 
+  	</if>
+  	<if test="serverId==0">
+  		and tmerchandise.twofenlei in ('13','14','15')
+  	</if>
+  	and tstore.provinces=#{province}
+  	and tstore.is_delete='N'
+  	and tstore.is_marketable=1
+  </select>
+  
+  <!--根据省份和服务、城市查询区域-->
+  <select id="selectAreaByCondition" resultType="java.util.HashMap">
+		SELECT distinct a.id,a.area_name 
+		FROM  tmerchandise tm LEFT JOIN  tstore ts on tm.store_id = ts.pkid LEFT JOIN area a on ts.area_id =a.id 
+		WHERE  tm.STATUS = 1
+		and ts.is_marketable=1
+	<if test="serverId!=0">
+  		 and tm.twofenlei=#{serverId} 
+  	</if>
+  	<if test="serverId==0">
+  		and tm.twofenlei in ('13','14','15')
+  	</if>
+		AND ts.provinces =#{province}
+		AND ts.city =#{city}
+		AND ts.STATUS = 2
+		AND ts.is_delete = 'N'
+		AND 0&lt;a.id
+		ORDER BY a.area_name
+  </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+    <dubbo:reference id="orderFacade" interface="com.qccr.ordercenter.facade.service.order.OrderFacade" version="1.0.0"
+                     timeout="10000"/>
+    <dubbo:reference id="serverOrderFacade" interface="com.qccr.ordercenter.facade.service.order.ServerOrderFacade" version="1.0.0"
+                     timeout="10000"/>
+    <dubbo:reference id="logisticsFacade"
+                     interface="com.qccr.ordercenter.facade.service.order.LogisticsFacade" version="1.0.0" timeout="30000"/>
+    <dubbo:reference id="storeManageFacade"
+                     interface="com.qccr.ordercenter.facade.service.merchant.StoreManageFacade" version="1.0.0" timeout="30000"/>
+    <dubbo:reference id="storeServerFacade"
+                     interface="com.qccr.ordercenter.facade.service.merchant.StoreServerFacade" version="1.0.0" timeout="30000"/>
+
+</beans>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qccr.sh.dao.StoreDao">
+    <sql id="Comment_Where_Clause" >
+        <if test="storeId!=null">
+            AND sc.store_id = #{storeId,jdbcType=INTEGER}
+        </if>
+        <if test="serviceParentId!=null and serviceParentId!=''">
+            AND EXISTS(select 1 from tdictornary t where type=1 AND t.pkid=sc.server_id AND (t.pkid=#{serviceParentId} OR t.superid=#{serviceParentId}))
+        </if>
+        <if test="serviceId!=null and serviceId!=''">
+            AND sc.server_id=#{serviceId}
+        </if>
+        <if test="createTimeStart!=null and createTimeStart!=''">
+            <![CDATA[ AND o.create_time >= #{createTimeStart} ]]>
+        </if>
+        <if test="createTimeEnd!=null and createTimeEnd!=''">
+            <![CDATA[ AND o.create_time < #{createTimeEnd} ]]>
+        </if>
+        <if test="commentTypeId!=null and commentTypeId=='1'.toString()">
+            <![CDATA[ AND sc.imgs is not null and sc.imgs<>'' ]]>
+        </if>
+        <if test="commentTypeId!=null and commentTypeId=='2'.toString()">
+            <![CDATA[ AND IFNULL(sc.score,0)>= 4  ]]>
+        </if>
+        <if test="commentTypeId!=null and commentTypeId=='3'.toString()">
+            <![CDATA[ AND IFNULL(sc.score,0)>= 3 AND IFNULL(sc.score,0)<4  ]]>
+        </if>
+        <if test="commentTypeId!=null and commentTypeId=='4'.toString()">
+            <![CDATA[ AND IFNULL(sc.score,0) < 3  ]]>
+        </if>
+    </sql>
+    <!--查询商户服务评价列表-->
+    <select id="selectCommentList" parameterType="Map" resultType="java.util.HashMap">
+            SELECT
+              sc.id,sc.comment,DATE_FORMAT(sc.comment_time,'%Y-%m-%d %H:%i:%s') commentTime,sc.user_id userId,sc.imgs
+            FROM server_comment sc left JOIN order_server os on sc.order_server_id = os.id left JOIN orders o on os.order_id = o.id
+            WHERE sc.is_show = 1
+            <include refid="Comment_Where_Clause" />
+            ORDER BY sc.comment_time DESC
+            limit #{pageStart},#{pageSize}
+    </select>
+    <!--查询商户服务评价列表的数量-->
+    <select id="countCommentList" parameterType="Map" resultType="int">
+        SELECT
+           count(1)
+        FROM server_comment sc left JOIN order_server os on sc.order_server_id = os.id left JOIN orders o on os.order_id = o.id
+        WHERE sc.is_show = 1
+        <include refid="Comment_Where_Clause" />
+    </select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+        ">
+        
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="sh" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry address="${zk.url}" />
+	<!--<dubbo:monitor protocol="registry"></dubbo:monitor> -->
+
+    <dubbo:consumer check="false"/>
+
+	<!-- carman相关接口 -->
+	<import resource="dubbo/sh-external-dubbo-carman.xml" />
+
+	<!-- ordercenter相关接口 -->
+	<import resource="dubbo/sh-external-dubbo-ordercenter.xml" />
+
+	<!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+	<dubbo:reference id="updateOrderService"
+		interface="com.towell.carman.service.order.UpdateOrderService"
+		version="1.0.0" />
+
+	<dubbo:reference id="storeFacade" interface="com.toowell.crm.facade.store.service.StoreFacade"
+					 version="1.0.0" /><!-- url="dubbo://192.168.4.38:22881" -->
+		
+				 
+	 <dubbo:reference id="promotionFacade" interface="com.qccr.marketcenter.facade.service.promotion.PromotionFacade" version="1.0.0" />
+	<!--<dubbo:reference id="servicePromotionFacade" interface="com.qccr.marketcenter.facade.service.promotion.ServicePromotionFacade"
+					 version="2.0.0" check="false" url="dubbo://172.16.11.127:20831" timeout="100000"/>-->
+
+	<dubbo:reference id="servicePromotionFacade" interface="com.qccr.marketcenter.facade.service.promotion.ServicePromotionFacade"
+					 version="1.0.0" check="false"/>
+
+	<dubbo:reference id="productFacade"
+		interface="com.toowell.crm.facade.product.service.ProductFacade"
+		check="false" version="1.0.0" />
+
+	<dubbo:reference id="memchantUserFacade"
+					 interface="com.toowell.crm.facade.user.service.UserFacade"
+					 check="false" version="1.0.0" />
+
+	<dubbo:reference id="messageService"
+		interface="com.towell.carman.service.message.MessageService" version="1.0.0" />
+
+	<!-- memberCenter start -->
+	<dubbo:reference id="userFacade"
+		interface="com.toowell.membercenter.facade.service.user.UserFacade"
+		version="1.0.0" timeout="30000" />
+
+	<dubbo:reference id="userMerchantFacade"
+			interface="com.toowell.membercenter.facade.service.merchant.UserMerchantFacade" version="1.0.0" />
+	<!-- memberCenter end -->
+
+	<dubbo:reference id="smsServiceFacade" interface="com.qccr.gotone.facade.SmsServiceFacade" version="1.0.0" />
+
+	<dubbo:reference id="areaServiceFacade" interface="com.qccr.datacenter.facade.service.AreaServiceFacade" version="1.0.0" />
+
+	<dubbo:reference id="businessCooperationFacede"
+		interface="com.toowell.crm.facade.cooperation.service.TBusinessCooperationFacede" version="1.0.0" />
+	<dubbo:reference id="itemAttrManagerFacade" interface="com.toowell.crm.facade.product.service.ItemAttrManagerFacade" version="1.0.0"/>
+	<dubbo:reference id="itemCategoryFacade" interface="com.toowell.crm.facade.product.service.ItemCategoryFacade" version="1.0.0" />
+
+</beans>

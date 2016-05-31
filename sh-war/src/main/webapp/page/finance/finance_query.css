@@ -1,0 +1,400 @@
+/* CSS Document */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a,img {
+	border: 0px none;
+}
+
+li {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+body {
+	color: #000;
+	font-size: 14px;
+	font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ", Arial, sans-serif;
+}
+
+.h {
+	height: 30px;
+	overflow: hidden;
+}
+
+.content {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	position: absolute;
+	background-color: #f0f4fb;
+}
+
+.box_right {
+	margin-left: 200px;
+	width: auto;
+}
+
+.box_top {
+	height: 80px;
+	background-color: #2D384C;
+	border-bottom: 1px solid #F93;
+}
+
+.top_tz {
+	float: left;
+	margin-left: 30px;
+	margin-top: 28px;
+	display: inline;
+}
+
+.top_tz span {
+	float: left;
+}
+
+.top_tz img {
+	margin-right: 10px;
+}
+
+.top_tz a {
+	color: #ff9933;
+	line-height: 23px;
+}
+
+.top_right {
+	float: right;
+	margin-top: 0px;
+	display: inline;
+	height: 80px;
+	line-height: 80px;
+}
+
+.user_box {
+	
+}
+
+.user_box ul {
+	float: right;
+	margin-right: 20px;
+	display: inline;
+}
+
+.user_box ul li {
+	display: block;
+	position: relative;
+	cursor: pointer;
+	float: left;
+	padding: 0px;
+	margin-right: 20px;
+	height: 80px;
+	line-height: 80px;
+}
+
+.user_box ul li a  .user_icon {
+	float: left;
+    padding: 0px 5px;
+    width: 22px;
+    margin-right: 5px;
+    margin-top: 29px;
+}
+
+.user_box ul li a span {
+	color: #FFF;
+	font-size: 16px;
+	padding-right: 5px;
+	height: 80px;
+	line-height: 80px;
+}
+
+.user_box ul li a span .fa-angle-down {
+	width: 18px;
+    height: 11px;
+    padding-left: 5px;
+}
+
+.user_box ul li a .exit_icon {
+	width: 22px;
+	float: left;
+	padding: 0px 5px;
+	margin-right: 3px;
+	margin-top: 29px;
+}
+
+.search_box {
+	margin-left:30px;
+}
+
+.search_kk {
+	width: 365px;
+	font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ", Arial, sans-serif;
+	height: 20px;
+	border: 1px solid #D0D0D0;
+	padding: 7px 5px 7px 5px;
+	color: #ABA9A9;
+}
+
+.search_button {
+	font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ", Arial, sans-serif;
+	color: #FFF;
+	text-align: center;
+	background-color: #ff9933;
+	border-radius: 5px;
+	height: 36px;
+	margin-left: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	display: inline;
+	width: 100px;
+	border: medium none;
+	font-size:14px;
+}
+.search_button:hover{
+	background-color: #feb059;
+}
+.tab_order {
+	padding: 20px 30px;
+}
+
+.tab_box {
+	width: 100%;
+	font-size: 12px;
+	text-align: center;
+	border: 1px solid #D9D8D8;
+	margin-bottom: 30px;
+	background-color: #FFF;
+	border-collapse: collapse;
+}
+
+.tab_box tr td.td_title {
+	background: #8793b2 repeat scroll 0 0;
+	height: 44px;
+	line-height: 44px;
+	color: #fff;
+	border: #dbdcdc 1px solid;
+}
+
+.tab_box tr td.td_content1 {
+	background-color: #fff;
+	height: 43px;
+	line-height: 43px;
+	color: #3d3d3d;
+	border: #dbdcdc 1px solid;
+}
+
+.tab_box tr td.td_content2 {
+	background-color: #f3f8fb;
+	height: 43px;
+	line-height: 43px;
+	color: #3d3d3d;
+	border: #dbdcdc 1px solid;
+}
+
+.tab_box tr td a,.tab_box tr td a:hover {
+	color: #1f5fd5;
+	text-decoration: underline;
+}
+
+.tab_box .btn_zp {
+	font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ", Arial, sans-serif;
+	color: #FFF;
+	text-align: center;
+	background-color: #2896d2;
+	border-radius: 5px;
+	height: 30px;
+	font-weight: bold;
+	cursor: pointer;
+	width: 90px;
+	border: medium none;
+}
+
+.page {
+	clear: both;
+	font-size: 14px;
+	text-align: center;
+	font-weight: 400;
+	color: #404040;
+	margin: 15px auto;
+}
+
+.prev {
+	background: url(../images/arw_l.gif) no-repeat scroll 0 0;
+	background-position: 50% 50%;
+	z-index: 100;
+}
+
+.page a {
+	display: inline;
+	margin-left: 6px;
+	text-align: center;
+	padding: 4px 9px;
+	border: 1px solid #b3b3b3;
+	background-color: #ffffff;
+	background-repeat: no-repeat;
+	color: #2E2E2E;
+	border-radius: 3px;
+	overflow: hidden;
+	text-decoration: none;
+	z-index: 1;
+	font-size: 14px;
+}
+
+.next {
+	background: url(../images/arw_r.gif) no-repeat scroll 0 0;
+	background-position: 50% 50%;
+}
+
+.page .current,.page a:hover {
+	color: #FFF;
+	border: 1px solid #7d8da7;
+	border-radius: 3px;
+	background-color: #7d8da7;
+	padding: 4px 9px;
+	text-align: center;
+	margin-left: 6px;
+}
+
+.tab_order ul {
+	height: 36px;
+}
+
+.tab_order ul li {
+	float: left;
+	margin: 0px 5px 0px 0px;
+	font-weight: bold;
+	font-size: 14px;
+	height: 36px;
+	line-height: 36px;
+	width: 140px;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 5px 5px 0px 0px;
+	background: none repeat scroll 0% 0% #dadada;
+	color: #4d4d4d;
+}
+
+.tab_order ul li.hit {
+	font-weight: bold;
+	cursor: pointer;
+	background: none repeat scroll 0% 0% #2ab0db;
+	color: #FFF;
+}
+
+.em_nr {
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 80px;
+	padding: 0px 0px 5px;
+	box-shadow: 0px 2px 3px #929292;
+	background: #F0F4FB none repeat scroll 0% 0%;
+	z-index: 10;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-top: 1px solid #F93;
+}
+.em_nr .em_out{
+	position:relative;
+	margin: 0 3%;
+}
+.add_bg{
+	background-color:#373e56 !important;
+}
+
+.em_nr a {
+	border-top:1px solid #ccc;
+	display:block;
+	color: #2d384c;
+	height:30px !important;
+	line-height:30px !important;
+}
+
+.em_nr a:hover {
+	background-color: #f9f9f9;
+}
+
+.arrow_top {
+	width: 0px;
+	height: 0px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 10px solid #f0f4fb;
+	position: absolute;
+	left: 32px;
+	top: -10px;
+	z-index: 2;
+}
+
+.select_3{
+	width:80px;
+	height:20px;
+	font-size:12px;
+	border:1px solid #858585;
+	}
+	
+.hover {
+	
+}
+
+.sel_con2 {
+    height: 28px;
+    width: 100px;
+    border: 1px solid #d0d0d0;
+  	font-family: "Microsoft YaHei", "å¾®è½¯é›…é»‘", Arial, sans-serif;
+}
+.lab_bt {
+    line-height: 28px;
+    width: 90px;
+    float: left;
+    text-align: right;
+    margin-right: 5px;
+    display: inline;
+    color: #353535;
+}
+.cont_right ul li.row {
+    padding: 8px 0px;
+    overflow: hidden;
+   
+}
+.smstime_updown {
+  display: inline-block !important;
+  width: 10px;
+  height: 7px;
+  display: table-cell;
+  vertical-align: middle;
+  border: 0;
+  background: #8793b2 repeat scroll 0 0;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.smstime_updown.down{
+	background:url(../../images/down_icon.png) no-repeat center center;
+	background-size:10px 7px;
+}
+.smstime_updown.up{
+	background:url(../../images/up_icon.png) no-repeat;
+	background-size:10px 7px;
+}
+.smstime_updown:active{
+	border:0;
+}
+
+/*ÈÕÆÚÑùÊ½²¿·ÖÖØÐ´*/
+
+.laydate-icon {
+	font-family: "Microsoft YaHei", "å¾®è½¯é›…é»‘", Arial, sans-serif;
+	height:26px !important;
+	line-height:26px !important;
+	padding-left:4px;
+}

@@ -1,0 +1,37 @@
+@charset "utf-8";
+.page {
+    clear: both;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 400;
+    color: #404040;
+    margin:20px 20px 0 0;
+}
+
+.page a {
+    display: inline;
+    margin-left: 6px;
+    text-align: center;
+    padding: 4px 10px;
+    border: 1px solid #b3b3b3;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    color: #666;
+    overflow: hidden;
+    text-decoration: none;
+    z-index: 1;
+    font-size: 14px;
+}
+.spage{ width:40px; height:24px; margin-left:5px; margin-top:-3px; text-align:center;}
+.page .current,.page a:hover {
+    color: #FFF;
+    border: 1px solid #e62d46;
+    background-color: #e62d46;
+    padding: 4px 10px;
+    text-align: center;
+    margin-left: 6px;
+}
+/*消息*/
+.applyagain{
+    border: 0;margin-top:-3px;color:blue;background: white;cursor:pointer;
+}

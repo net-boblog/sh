@@ -1,0 +1,23 @@
+@charset "utf-8";
+label.error {
+				color: red;
+				font-size: 14px;
+				font-weight: normal;
+				margin-top: 0.5em;
+				float: none;
+				background:url(../../images/yichang_icon.png) #faf1f2 10px center no-repeat;
+				border:#fab7c0 1px solid;
+				padding:3px 10px;
+				padding-left:27px;
+				border-radius:3px;
+		}
+
+		@media screen and (orientation: portrait){
+				label.error { margin-left: 0; display: block; }
+		}
+
+		@media screen and (orientation: landscape){
+				label.error { display: inline-block; margin-left:5px; }
+		}
+
+		em { color: red; font-weight: bold; padding-right: .25em; }

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="1 seconds" debug="false">
+
+	<!--配置常量，在后面的配置中使用-->
+	<property name="PROJECT_NAME" value="sh" />
+
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+	<property name="LOG_HOME" value="/data/html/logs/${PROJECT_NAME}" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="PROJECT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-SQL"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-sql.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-sql_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-SHIRO"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-shiro.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-shiro_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-MYBATIS"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-mybatis.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-mybatis_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-DUBBO"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-dubbo.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-dubbo_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="PROJECT-APACHECOMMON"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-apachecommon.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-apachecommon_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-ZOOKEEPER"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-zookeeper.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-zookeeper_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-SPRING"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-spring.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-spring_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="PROJECT-QUARTZ"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${PROJECT_NAME}-quartz.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{60} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-quartz_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!--
+		（1）root中只配置控制台日志，其他所有的日志把additivity设置为true都打到控制台，方便开发阶段定位问题。
+		（2）第三方框架的日志抽取到单独的文件中，并且级别为ERROR。
+	-->
+	<!-- root-->
+	<root level="ERROR">
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+	<!-- shop自己的日志-->
+	<logger name="com.qccr.sh" level="debug" additivity="true">
+		<appender-ref ref="PROJECT" />
+	</logger>
+
+	<!-- sql日志，如果需要关闭控制台的sql语句，要把级别改为ERROR或者additivity="false"-->
+	<logger name="ccom.qccr.sh.mapper" level="debug" additivity="true">
+		<appender-ref ref="PROJECT-SQL" />
+	</logger>
+	<logger name="ccom.qccr.sh.dao" level="debug" additivity="true">
+		<appender-ref ref="PROJECT-SQL" />
+	</logger>
+	<logger name="com.mchange.v2" level="debug" additivity="true">
+		<appender-ref ref="PROJECT-SQL" />
+	</logger>
+	
+	<!-- shiro日志-->
+	<logger name="org.apache.shiro" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-SHIRO" />
+	</logger>
+
+	<!-- mybatis的日志-->
+	<logger name="org.mybatis" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-MYBATIS" />
+	</logger>
+
+	<!-- zookeeper的日志，因为会比较多所以是error级别-->
+	<logger name="org.apache.zookeeper" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-ZOOKEEPER" />
+	</logger>
+	<logger name="org.I0Itec.zkclient" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-ZOOKEEPER" />
+	</logger>
+
+	<!-- dubbo的日志，error级别-->
+	<logger name="com.alibaba.dubbo" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-DUBBO" />
+	</logger>
+
+	<!-- apache-common的日志，error级别-->
+	<logger name="org.apache.commons" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-APACHECOMMON" />
+	</logger>
+
+	<!-- spring的日志，error级别-->
+	<logger name="org.springframework" level="debug" additivity="false">
+		<appender-ref ref="PROJECT-SPRING" />
+	</logger>
+
+</configuration>

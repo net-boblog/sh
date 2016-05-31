@@ -1,0 +1,69 @@
+/*商户回复用户评论*/
+div.container{
+    position:relative;
+    top:10px;
+    font-size: 9pt;
+    display:block;
+    background-color:transparent;
+}
+s{
+    position:absolute;
+    top:-16px;
+    *top:-22px;
+    left:20px;
+    display:block;
+    height:0;
+    width:0;
+    font-size: 0;
+    line-height: 0;
+    border-color:transparent transparent #ccc transparent;
+    border-style:dashed dashed solid dashed;
+    border-width:8px;
+}
+s i{
+    position:absolute;
+    top:-9px;
+    *top:-9px;
+    left:-10px;
+    display:block;
+    height:0;
+    width:0;
+    font-size: 0;
+    line-height: 0;
+    border-color:transparent transparent #fff transparent;
+    border-style:dashed dashed solid dashed;
+    border-width:10px;
+}
+.reply_area{
+    border: 1px solid #ccc;width: 90%;height: 70px;background-color: white;
+    padding: 5px;
+}
+.reply_up{
+    font-size:14px;color:#0000FF;cursor:pointer;
+    margin-left:10px;
+}
+.submit_btn {
+    width: 70px;
+    height: 28px;
+    display: inline-block;
+    margin-top: 14px;
+    line-height: 28px;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    background: #e62d46;
+}
+.cancel_btn {
+    width: 70px;
+    height: 28px;
+    display: inline-block;
+    margin-top: 14px;
+    line-height: 28px;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    background: #9eaab6;
+}
+.update_btn{
+    margin-top: 20px;
+}

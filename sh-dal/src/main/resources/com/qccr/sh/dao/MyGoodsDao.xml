@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qccr.sh.dao.MyGoodsDao">
+  
+	<select id="queryTMerchandiseByMerchantid" parameterType="long" resultType="java.util.Map">   
+	    SELECT
+			(
+				SELECT
+					storename
+				FROM
+					tstore
+				WHERE
+					pkid = T1.store_id
+			) storename,
+			T1.`name` server_name,
+			T1.sprice price
+		FROM
+			tmerchandise T1
+		WHERE
+			T1.store_id IN (
+				SELECT
+					pkid
+				FROM
+					tstore
+				WHERE
+					merchantid =  #{id}
+			)
+		and T1.status = 1
+	</select>
+	
+	<select id="queryTMerchandiseByStoreid" parameterType="long" resultType="java.util.Map">   
+	    SELECT
+			(
+				SELECT
+					storename
+				FROM
+					tstore
+				WHERE
+					pkid = T1.store_id
+			) storename,
+			T1.`name` server_name,
+			T1.sprice price
+		FROM
+			tmerchandise T1
+		WHERE
+			T1.store_id =  #{id}
+		  and T1.status = 1
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qccr.sh.dao.UserDao">
+
+ 	<select id="selectRolesNameByUserId" resultType="string">
+		SELECT
+			t2.rolename
+		FROM
+			sh_user_role t1,
+			sh_role t2
+		WHERE
+			t1.role_id = t2.id
+		AND t1.user_id =#{id}
+	</select>
+
+	<select id="selectPermissionsNameByUserId" resultType="string">
+		SELECT
+			DISTINCT t2.permissionname
+		FROM
+			sh_user_role t1,
+			sh_permission t2
+		WHERE
+			t1.role_id = t2.role_id
+		AND t1.user_id =#{id}	
+	</select>	
+	
+	<select id="selectUserByUsername" parameterType="string" resultType="java.util.HashMap">
+		SELECT
+			`t1`.`id` AS `id`,
+			`t1`.`username` AS `username`,
+			`t1`.`password` AS `password`,
+			`t1`.`fullname` AS `fullname`,
+			`t1`.`gender` AS `gender`,
+			`t1`.`phone` AS `phone`,
+			`t1`.`email` AS `email`,
+			`t1`.`address` AS `address`,
+			`t2`.`usertype` AS `usertype`,
+			`t2`.`store_id` AS `store_id`,
+			`t1`.`dept_id` AS `dept_id`,
+			`t1`.`grade_id` AS `grade_id`,
+			`t1`.`is_admin` AS `is_admin`,
+			`t1`.`is_lock` AS `is_lock`,
+			`t1`.`is_delete` AS `is_delete`,
+			`t1`.`create_operator` AS `create_operator`,
+			`t1`.`create_date` AS `create_date`,
+			`t1`.`update_operator` AS `update_operator`,
+			`t1`.`update_date` AS `update_date`
+		FROM
+			`authority_user` `t1`
+			JOIN `authority_user_type` `t2`
+		WHERE
+				`t1`.`username` = `t2`.`username`
+			AND `t1`.`usertype` = 1
+			AND `t1`.`username` = #{username}
+	</select>
+ 	
+ 	<update id="updatePasswordByusername">
+ 		update authority_user set password =#{password} where username=#{username}
+ 	</update>
+ 	<select id="checkUserByUsername" parameterType="string" resultType="java.util.HashMap">
+		SELECT
+			`t1`.`id` AS `id`,
+			`t1`.`username` AS `username`,
+			`t1`.`password` AS `password`
+			
+		FROM
+			`authority_user` `t1`
+			JOIN `authority_user_type` `t2`
+		WHERE
+				`t1`.`username` = `t2`.`username`
+			AND `t1`.`usertype` = 1
+			AND `t1`.`username` = #{username}
+	</select>
+</mapper>

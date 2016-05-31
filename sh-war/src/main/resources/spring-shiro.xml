@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 调用我们配置的权限管理器 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 配置我们的登录请求地址 -->
+		<property name="loginUrl" value="/anon/login/login.s" />
+		<!-- 配置我们在登录页登录成功后的跳转地址，如果你访问的是非/login地址，则跳到您访问的地址 -->
+		<property name="successUrl" value="/index.jsp" />
+		<!-- 如果您请求的资源不再您的权限范围，则跳转到/403请求地址 -->
+		<property name="unauthorizedUrl" value="/anon/login/403.s" />
+		<!-- 权限配置 -->
+		<property name="filterChainDefinitionMap">
+			<map>
+				<!-- <entry key="/admin/" value="anon" /> <entry key="/admin/index.jsp" 
+					value="anon" /> <entry key="/admin/login.jhtml" value="authc" /> <entry key="/admin/logout.jhtml" 
+					value="logout" /> <entry key="/admin/common/captcha.jhtml" value="anon" /> 
+					<entry key="/admin/goods/**" value="perms[admin:goods]" /> <entry key="/admin/stock/**" 
+					value="perms[admin:stock]" /> <entry key="/admin/log/**" value="perms[admin:log]" 
+					/> -->
+				<entry key="/anon/login/**" value="anon" />
+				<entry key="/page/jump/checkValid.s" value="anon" />
+				<entry key="/page/jump/toSShop.s" value="anon" />
+				<entry key="/page/activity/apply.s" value="anon" />
+				<entry key="/page/**" value="authc" />
+			</map>
+		</property>
+		<!-- <property name="filters"> <map> <entry key="authc" value-ref="authenticationFilter" 
+			/> </map> </property> -->
+	</bean>
+
+	<!-- <bean id="authenticationFilter" class="com.toowell.kefu.filter.AuthenticationFilter" 
+		/> -->
+
+	<!-- 配置权限管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- ref对应我们写的realm MyShiro -->
+		<property name="realm" ref="myShiro" />
+		<!-- 使用下面配置的缓存管理器 -->
+		<property name="cacheManager" ref="shiroEhcacheManager" />
+	</bean>
+
+	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
+	</bean>
+
+	<!-- <bean id="myShiro" class="com.toowell.kefu.MyShiro" /> -->
+	
+	<!-- 用户授权信息Cache, 采用EhCache -->  
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
+        <!-- <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" /> -->
+        <property name="cacheManager" ref="ehCacheManager" />
+    </bean>
+	<!-- <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" /> -->
+	
+	<!-- Shiro生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+</beans>

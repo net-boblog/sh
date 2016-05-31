@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+    <dubbo:reference id="clearService" interface="com.towell.carman.service.order.ClearService" version="1.0.0"
+                     check="false" timeout="10000"/>
+    <dubbo:reference id="rewardService" interface="com.towell.carman.service.order.RewardService" version="1.0.0"
+                     check="false" timeout="10000"/>
+    <dubbo:reference id="serverOrderService" interface="com.towell.carman.service.order.ServerOrderService"
+                     version="1.0.0" check="false" timeout="10000"/>
+    <dubbo:reference id="storePickupService" interface="com.towell.carman.service.order.StorePickupService"
+                     version="1.0.0" check="false" timeout="10000"/>
+    <dubbo:reference id="serverService" interface="com.towell.carman.service.goods.ServerService"
+                     version="1.0.0" check="false" timeout="10000"/>
+    <dubbo:reference id="storeCommentService" interface="com.towell.carman.service.store.StoreCommentService"
+                     version="1.0.0" timeout="10000"/>
+    <dubbo:reference id="storeStatisticService" interface="com.towell.carman.service.store.StoreStatisticService"
+                     version="1.0.0" timeout="10000"/>
+    <dubbo:reference id="smsService" interface="com.towell.carman.service.common.SMSService"
+                     version="1.0.0"  />
+    <dubbo:reference id="orderService" interface="com.towell.carman.service.order.OrderService"
+                     version="1.0.0" timeout="30000" />
+    <dubbo:reference id="commentService" interface="com.towell.carman.service.user.CommentService"
+                     version="1.0.0" timeout="30000"/>
+
+</beans>

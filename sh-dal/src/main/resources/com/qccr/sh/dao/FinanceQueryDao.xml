@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qccr.sh.dao.FinanceQueryDao">
+  
+	<select id="queryFinance" parameterType="Map" resultType="java.util.HashMap">
+		SELECT
+			T1.id js_id,
+			T1.no js_no,
+			IFNULL(DATE_FORMAT(T1.clear_time, '%Y-%m-%d'),'') clear_time,
+			T1.sum sum,
+			T1.`status` c_status,
+			CASE T1.`status`
+			WHEN 2 THEN
+				'结算中'
+			WHEN 3 THEN
+				'已结算'
+			ELSE
+				'未知'
+			END status,
+			(
+				SELECT
+					concat(IFNULL(payee,''), ' ', IFNULL(account_no,'')
+					)
+				FROM
+					tstore
+				WHERE
+					pkid = T1.store_id
+			) accinfo
+		FROM
+			`clear` T1
+		WHERE 1=1		
+		AND T1.store_id in (
+			SELECT
+				store_id
+			FROM
+				authority_user_type
+			WHERE
+				username = #{username}
+			AND usertype = '1'	
+				)
+		<if test="js_date_start != null">
+		AND T1.clear_time &gt;= #{js_date_start}
+		</if>
+		<if test="js_date_end != null">
+		AND T1.clear_time &lt; #{js_date_end}
+		</if>
+		<if test="js_status != 0">
+		AND T1.`status` = #{js_status}
+		</if>
+
+		<choose>
+			<when test="smstime_updown == 0"> ORDER BY T1.clear_time DESC</when>
+			<otherwise> ORDER BY T1.clear_time ASC </otherwise>
+		</choose>
+		<if test="page_offset != null ">
+		LIMIT #{page_offset},#{page_limit}
+		</if>
+	</select>
+	
+	<select id="queryFinanceSize" parameterType="Map" resultType="long">
+		SELECT
+			count(*)
+		FROM
+			`clear` T1
+		WHERE 1=1		
+		AND T1.store_id in (
+			SELECT
+				store_id
+			FROM
+				authority_user_type
+			WHERE
+				username = #{username}
+			AND usertype = '1'	
+				)
+		<if test="js_date_start != null">
+		AND T1.clear_time &gt;= #{js_date_start}
+		</if>
+		<if test="js_date_end != null">
+		AND T1.clear_time &lt; #{js_date_end}
+		</if>
+		<if test="js_status != 0">
+		AND T1.`status` = #{js_status}
+		</if>
+	</select>
+	
+	<select id="queryFinanceDetail" parameterType="Map" resultType="java.util.HashMap">
+		SELECT
+			T2.no,
+			IF(T1.order_goods_id is null,T3.`name`,
+					(SELECT (SELECT name from goods where id = Q1.goods_id ) FROM order_goods Q1 where Q1.id = T1.order_goods_id))  content,
+			IF(T1.order_goods_id is null,1,(SELECT Q1.sale_num FROM order_goods Q1 where Q1.id = T1.order_goods_id))  sum,
+			IF(LENGTH(T2.buyer_phone) > 0,
+		          concat(IFNULL(T2.buyer_name, ''),
+		                 ' ',
+		                 IF(LENGTH(T2.buyer_phone) = 11,
+		                    concat(left(T2.buyer_phone, 2), '******', RIGHT(T2.buyer_phone, 3)),
+		                    concat(left(T2.buyer_phone, 2), '******'))),
+		          concat(IFNULL(T5.receiverName, ''),
+		                 ' ',
+		                 IF(LENGTH(T5.receiverPhone1) = 11,
+		                    concat(left(T5.receiverPhone1, 2),
+		                           '******',
+		                           RIGHT(T5.receiverPhone1, 3)),
+		                    concat(left(T5.receiverPhone2, 2),
+		                           '******',
+		                           RIGHT(T5.receiverPhone2, 3))))) userinfo,
+			(SELECT `name` FROM tdictornary where pkid = T3.twofenlei) server_type,
+			T3.sprice price,
+			T1.sms_code sms_code,
+			IFNULL(DATE_FORMAT(T1.sms_time, '%Y-%m-%d'),'') sms_date
+		FROM
+			order_server AS T1,
+			orders AS T2 LEFT JOIN order_extinfo T5 ON T2.id = T5.orderId,
+			tmerchandise T3
+		WHERE
+			T1.order_id = T2.id
+		AND T3.pkid = T1.server_store_id
+    	AND T1.`status` = 3
+		AND T1.clear_id = #{id}
+		ORDER BY T1.sms_time
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+

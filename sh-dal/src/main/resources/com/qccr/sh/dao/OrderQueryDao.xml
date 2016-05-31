@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qccr.sh.dao.OrderQueryDao">
+
+	<sql id="queryOrdersWhereClause">
+		<if test="storeId != null">
+		AND T1.store_id = #{storeId}
+		</if>   
+		<if test="mendian != 0">
+		AND T1.store_id = #{mendian}
+		</if>		
+		<if test="searchinfo != null and searchinfo != ''">
+		AND (T2.buyer_phone = #{searchinfo} or T2.buyer_name=#{searchinfo} or ( T1.sms_code =#{searchinfo} ) )
+		</if>
+		<if test="js_date_start != null">
+		AND T1.sms_time &gt;= #{js_date_start}
+		</if>
+		<if test="js_date_end != null">
+		AND T1.sms_time &lt; #{js_date_end}
+		</if>
+		<if test="service_type != '00'">
+		AND T1.server_id = #{service_type}
+		</if>
+		<if test="js_status == 0">
+		AND T1.audit_status = 2
+		</if>
+		<if test="js_status == 1">
+		AND T1.audit_status = 0 and T1.clear_id is null
+		</if>
+		<if test="js_status == 2">
+		AND T1.audit_status = 0 and T8.status = 2
+		</if>
+		<if test="js_status == 3">
+		AND T1.audit_status = 0 and T8.status = 3
+		</if>
+		<if test="js_status == 4">
+		AND T1.audit_status = 1
+		</if>
+	</sql>
+
+
+	<select id="queryOrders" parameterType="Map" resultType="java.util.HashMap">
+		SELECT T2.no server_id,
+		       IF(T1.order_goods_id is null,
+		          T1.server_name,
+		          (SELECT Q1.goods_name
+		             FROM order_goods Q1
+		            where Q1.id = T1.order_goods_id)) item_name,
+		       IF(T1.order_goods_id is null,
+		          1,
+		          (SELECT sale_num
+		             FROM order_goods Q1
+		            where Q1.id = T1.order_goods_id)) sale_num,
+		       concat(IFNULL(T2.buyer_name, ''),
+		            ' ',
+		            hidePhone(T2.buyer_phone)) userinfo,
+		       T1.server_name server_name,
+		       IF(T1. status >= '3', T1.sms_code, '') sms_code,
+		       IFNULL(DATE_FORMAT(sms_time, '%Y-%m-%d'), '') sms_check_date,
+		       date_format(T1.last_audit_time, '%Y-%m-%d %H:%i:%s') last_audit_time,
+		       IFNULL((select 1 from dual where  now() &lt; DATE_ADD(T1.last_audit_time,INTERVAL 15 day)),-1) backFlag,
+		       T1.audit_status audit_status,		       
+		       T1.`status` orders_status,
+		       IFNULL(T8.`status`,-1) clear_status
+		  FROM order_server AS T1 left join clear T8 on T8.id = T1.clear_id, orders AS T2
+		 WHERE T1.order_id = T2.id
+		   AND T1.status >= 3
+		<include refid="queryOrdersWhereClause"/>
+		<choose>
+			<when test="smstime_updown == 0"> ORDER BY T1.sms_time DESC</when>
+			<otherwise> ORDER BY T1.sms_time ASC</otherwise>
+		</choose>	
+		<if test="page_offset != null ">
+		LIMIT #{page_offset},#{page_limit}
+		</if>
+		
+	</select>
+  
+	<select id="queryOrdersSize" parameterType="Map" resultType="long">
+		SELECT count(*)
+		  FROM order_server AS T1 left join clear T8 on T8.id = T1.clear_id, orders AS T2
+		 WHERE T1.order_id = T2.id
+		   AND T1.status >= 3
+		<include refid="queryOrdersWhereClause"/>
+	</select>
+  
+	<select id="queryWashOrderByForVerification" parameterType="long" resultType="java.util.HashMap">
+		SELECT
+			T1.server_name content,
+			concat(T2.buyer_name, ' ', IF(LENGTH(T2.buyer_phone)=11, concat(left(T2.buyer_phone,2),'******',RIGHT(T2.buyer_phone,3)),concat(left(T2.buyer_phone,2),'******') )) userinfo,
+			T1.server_name server_type,
+			T2.seller_note seller_note
+		FROM
+			order_server AS T1,
+			orders AS T2
+		WHERE
+			T1.order_id = T2.id
+		AND T1.id = #{id}
+	</select>
+  
+	<select id="queryTireOrderByForVerification" parameterType="long" resultType="java.util.HashMap">
+	SELECT concat(T3.goods_name, ' * ',  T3.sale_num) content,
+	       IF(LENGTH(T2.buyer_phone) > 0,
+		          concat(IFNULL(T2.buyer_name, ''),
+		                 ' ',
+		                 IF(LENGTH(T2.buyer_phone) = 11,
+		                    concat(left(T2.buyer_phone, 2), '******', RIGHT(T2.buyer_phone, 3)),
+		                    concat(left(T2.buyer_phone, 2), '******'))),
+		          concat(IFNULL(T5.receiverName, ''),
+		                 ' ',
+		                 IF(LENGTH(T5.receiverPhone1) = 11,
+		                    concat(left(T5.receiverPhone1, 2),
+		                           '******',
+		                           RIGHT(T5.receiverPhone1, 3)),
+		                    concat(left(T5.receiverPhone2, 2),
+		                           '******',
+		                           RIGHT(T5.receiverPhone2, 3))))) userinfo,
+	       (SELECT name FROM tdictornary where pkid = T4.twofenlei) server_type,
+	       T2.seller_note seller_note
+	  FROM order_server AS T1, orders AS T2
+	  left join order_extinfo T5
+	    on T2.id = T5.orderId,
+	 order_goods AS T3, tmerchandise AS T4
+	 WHERE T1.order_id = T2.id
+	   AND T1.order_goods_id = T3.id
+	   AND T1.server_store_id = T4.pkid
+	   AND T1.id = #{id}
+	</select>
+  
+	<select id="queryMyServerTypeByStoreId" parameterType="Map" resultType="java.util.HashMap">
+		SELECT DISTINCT T1.twofenlei id,
+                (SELECT NAME FROM tdictornary WHERE pkid = T1.twofenlei) idname
+		  FROM tmerchandise T1
+		 WHERE 1 = 1
+		   and T1.store_id = #{storeId}
+	</select>
+	
+	<select id="queryMyServerTypeByMerchantId" parameterType="Map" resultType="java.util.HashMap">
+		SELECT DISTINCT T1.twofenlei id,
+                (SELECT NAME FROM tdictornary WHERE pkid = T1.twofenlei) idname
+		  FROM tmerchandise T1, tstore T2
+		 WHERE 1 = 1
+		   AND T1.store_id = T2.pkid
+		   AND T2.merchantid = #{merchantId}
+	</select>
+	
+	<!-- *********已验证服务查询******** -->
+	
+	<sql id="queryOrderServerWhereClause">
+	    AND T1.sms_time > '2015-09-01 00:00:00'
+		<if test="storeId != null">
+		AND T1.store_id = #{storeId}
+		</if>   
+		<if test="orderCode != null and orderCode != ''">
+		AND T2.no= #{orderCode}
+		</if>
+		<if test="buyer_name != null and buyer_name != ''">
+		AND T2.buyer_name=#{buyer_name}
+		</if>
+		<if test="buyer_phone != null and buyer_phone != ''">
+		AND T2.buyer_phone = #{buyer_phone}
+		</if>
+		<if test="smsCode != null and smsCode != ''">
+		AND T1.sms_code =#{smsCode}
+		</if>
+		<if test="start_date != null">
+		AND T1.sms_time &gt;= #{start_date}
+		</if>
+		<if test="end_date != null">
+		AND T1.sms_time &lt; #{end_date}
+		</if>
+		<if test="service_type != null">
+		AND T1.server_id IN
+		 <foreach collection="service_type" item="item" open="(" close=")" separator=",">
+		  #{item}
+		 </foreach>
+		</if>
+		<if test="audit_status != null and audit_status != -1">
+		AND T1.audit_status = #{audit_status}
+		</if>
+	</sql>
+	
+	<select id="queryServerOrder" parameterType="Map" resultType="java.util.HashMap">
+		SELECT T2.no orderCode,
+		       T1.id serverId,
+		       T2.user_id userId,
+		       IFNULL(T1.sale_num,1) as sale_num,
+		       FORMAT(T1.sale_num*T1.sprice,2) as sale_price,
+		       IFNULL(T2.buyer_name, '') buyer_name,
+		       hidePhone(T2.buyer_phone) buyer_phone,
+		       T1.server_name server_name,
+		       IF(T1. status >= '3', T1.sms_code, '') sms_code,
+		       IFNULL(DATE_FORMAT(sms_time, '%Y-%m-%d'), '') check_date,
+		       date_format(T1.last_audit_time, '%Y-%m-%d %H:%i:%s') audit_time,
+		       T1.audit_status audit_status	,
+		       IFNULL(T1.promotion_id,0) promotion_id	       
+		  FROM order_server AS T1, orders AS T2
+		  WHERE T1.order_id = T2.id
+		   AND T1.status = 3
+		<include refid="queryOrderServerWhereClause"/>
+		<choose>
+			<when test="smstime_updown == 0"> ORDER BY T1.sms_time DESC</when>
+			<otherwise> ORDER BY T1.sms_time ASC</otherwise>
+		</choose>	
+		<if test="page_offset != null ">
+		LIMIT #{startSize},#{page_limit}
+		</if>
+	</select>
+	<select id="queryServerOrderCount" parameterType="Map" resultType="long">
+		SELECT count(T1.id) FROM order_server T1 , orders AS T2
+		  WHERE T1.order_id = T2.id AND T1.status = 3
+		<include refid="queryOrderServerWhereClause"/>
+	</select>
+	
+	<!-- ****查询商户所提供的服务**** -->
+	<select id="queryStoreServer" parameterType="Map" resultType="java.util.HashMap">
+	<choose>
+	 <when test="serverId==0">
+	   SELECT DISTINCT t1.onefenlei id,t2.name
+       from tmerchandise t1,tdictornary t2 where t1.onefenlei=t2.pkid and t1.store_id=#{storeId}
+	 </when>
+	 <when test="serverId!=0">
+	   SELECT DISTINCT t1.twofenlei id,t2.name
+       from tmerchandise t1,tdictornary t2 where t1.twofenlei=t2.pkid and t1.store_id=#{storeId} and t1.onefenlei=#{serverId}
+	 </when>
+	</choose>
+	</select>
+	
+  <!-- ****************代收货订单查询逻辑************************* -->
+    <sql id="select_code">
+       <if test="orderCode != null and orderCode != ''">
+         and o.no=#{orderCode}
+       </if>
+    </sql>
+    
+    <!-- 根据订单id得到一条订单数据 -->
+    <select id="queryOneOrderById" parameterType="Map" resultType="java.util.HashMap">
+     select o.id,o.status,o.create_time,o.no,o.buyer_name,o.buyer_phone,o.buyer_note,o.send_type,o.address_id from orders o 
+     where o.id=#{orderId}
+    </select>
+    
+     <select id="queryServerPriceByorderId" parameterType="Map" resultType="java.util.HashMap">
+      select os.order_id as orderId,os.sale_num,os.sprice as sale_price,os.server_name,os.server_store_id,os.status,os.server_id
+      from order_server os  
+      where os.store_id=#{storeId}  and os.order_id in (<foreach collection="orderIds"  separator="," item="ids">#{ids}</foreach>)
+    </select>
+    
+    <!-- 根据门店id查询出指派向门店的订单 -->
+    <select id="queryThirdpartyOrders" parameterType="Map" resultType="java.util.HashMap">
+       select o.id as orderId,o.status,o.create_time,o.no from orders o where o.send_type = 1 
+       and o.address_id = #{storeId}  and o.type in(1,4)
+       and o.status in(<foreach collection="status"  separator="," item="s">#{s}</foreach>)
+       <include refid="select_code"></include>
+    </select>
+    
+    <!-- 根据门店Id查询出和门店有关的订单id和费用 -->
+    <select id="queryOrderSalePrice" parameterType="Map" resultType="java.util.HashMap">
+     select os.order_id as orderId,sum(os.sale_num*os.sprice) as sale_price from order_server os 
+     where os.store_id=#{storeId}  
+     <if test="orderIds !=null">
+      and os.order_id in (<foreach collection="orderIds"  separator="," item="ids">#{ids}</foreach>)
+     </if>
+     group by os.order_id
+    </select>
+    
+    <!-- 查询出服务单相关的订单 -->
+    <select id="queryOrderServers" parameterType="Map" resultType="java.util.HashMap">
+     select o.id as orderId,o.status,o.create_time,o.no  from orders o 
+     where  o.type in(1,4) and o.status in(<foreach collection="status"  separator="," item="s">#{s}</foreach>) 
+     <include refid="select_code"></include>
+     and o.id in (<foreach collection="orderIds"  separator="," item="ids">#{ids}</foreach>)
+    </select>
+    
+    <!-- 查询出相关的商品 -->
+    <select id="queryOrderGoods" parameterType="Map" resultType="java.util.HashMap">
+    select og.id as id,og.goods_name as goodsName,og.img,og.sale_num as saleNum,og.order_id orderId,og.gift_ogid as gift
+    from order_goods og where og.status in(1,11,12,13,14,31,36,37,38) 
+    and og.order_id in(<foreach collection="orderIds"  separator="," item="ids">#{ids}</foreach>)
+    </select>
+    
+    <!-- 根据服务单id -->
+    <select id="queryOrderIds"  parameterType="Map" resultType="int">
+    select os.order_id as orderId  from order_server os 
+    where os.store_id=#{storeId}   group by os.order_id
+    </select>
+    
+    <!--物流信息-->
+	<select id = 'findLogisticsByOrderId' parameterType="int" resultType ="java.util.HashMap">
+		select type,company,no,cost,user_cost from logistics where order_id = #{id} limit 1;
+	</select>
+</mapper>

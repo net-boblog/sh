@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+	>
+		
+	<!-- 对com.bbcv.appjoin.controller包下所有注解扫描 -->
+	<context:component-scan base-package="com.qccr.sh.controller"></context:component-scan>
+	<!-- 支持spring mvc新的注解类型 详细spring3.0手册 15.12.1 mvc:annotation-driven-->
+	<mvc:annotation-driven />
+	
+	<mvc:interceptors>
+				
+		<mvc:interceptor>
+			<mvc:mapping path="/page/jump/toSShop.s" />
+			<mvc:mapping path="/page/activity/apply.s" />
+			<bean class="com.qccr.sh.interceptor.MemberInterceptor" />
+		</mvc:interceptor>
+		<!-- <mvc:interceptor>
+			<mvc:mapping path="/page/**" />
+			<mvc:exclude-mapping path="/page/jump/checkValid.s" />
+			<bean class="com.qccr.sh.interceptor.CheckSimplePwdHandlerInterceptor" />
+		</mvc:interceptor> -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.qccr.sh.interceptor.TokenInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
+
+	
+</beans>

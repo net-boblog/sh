@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<!-- properties引入失败，似乎不支持相对路径 -->
+	<!-- <properties resource="../src/main/resources/jdbc.properties" /> -->
+	
+	<classPathEntry location="mysql-connector-java-5.1.26-bin.jar" />
+	
+	<context id="selfserverTables" targetRuntime="MyBatis3">	
+		
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+	
+		<commentGenerator>
+			<property name="suppressDate" value="true" /><!-- 是否生成注释代时间戳 -->
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.2.126:3306/qccr?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" userId="toowell"
+			password="toowell2013db">
+		</jdbcConnection> 
+		<!-- <jdbcConnection driverClass="${jdbc.driverClassName}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}"
+			password="${jdbc.password}">
+		</jdbcConnection> -->
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.qccr.sh.domain"
+			targetProject="../src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com.qccr.sh.mapper"
+			targetProject="../src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.qccr.sh.mapper" targetProject="../src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="sh_user" domainObjectName="User" />
+		<!-- <table tableName="usertrace" domainObjectName="Usertrace" />
+		<table tableName="orders" domainObjectName="Order" />
+		<table tableName="order_goods" domainObjectName="OrderGoods" />
+		<table tableName="order_server" domainObjectName="OrderServer" />
+		<table tableName="authority_user" domainObjectName="AuthorityUser"/>
+		<table tableName="authority_user_type" domainObjectName="AuthorityUserType"/>
+		<table tableName="tstore" domainObjectName="TStore"/>
+		<table tableName="tmerchant" domainObjectName="TMerchant"/>
+		<table tableName="tmerchandise" domainObjectName="TMerchandise"/>
+		
+		<table tableName="s_code" domainObjectName="Code" />
+		<table tableName="s_config" domainObjectName="Config" />
+		<table tableName="s_maxno" domainObjectName="MaxNo" />
+		<table tableName="B_MutualAgentXml" domainObjectName="MutualAgentXml" >
+			<generatedKey column="SN" sqlStatement="select B_MutualAgentXml_SEQ.nextval from dual" type="pre" />
+		</table>
+		<table tableName="B_MutualAgentXmlCont" domainObjectName="MutualAgentXmlCont" />
+		<table tableName="B_MutualAgentReply" domainObjectName="MutualAgentReply" />
+		<table tableName="B_MutualAgentXmlLog" domainObjectName="MutualAgentXmlLog" /> -->
+		
+
+	</context>
+	
+</generatorConfiguration>

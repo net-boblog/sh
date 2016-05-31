@@ -1,0 +1,391 @@
+div.high_seach{
+	margin:0;
+}
+.shop_place{
+	margin:0px 130px;
+}
+.sp_150{
+	margin-left: 170px;
+	margin-right: 0px;
+}
+.info select{
+	border: 1px solid #ccc
+}
+div.contract_name,.goods_name{
+	margin:0px 350px 0px 150px;
+}
+.state,.operating_state{
+	margin-left: 150px;
+	position: relative;
+}
+.state select{
+	width:200px;
+	height:30px;
+	border: 1px solid #ccc;
+}
+.seach_list li{
+	width: 110px;
+	height: 30px;
+}
+.high,.basic{
+	cursor: pointer;
+}
+.high img,.basic img{
+	width: 16px;
+	height: 16px;
+}
+div.basic{display: none;}
+.button,.pp_button,.ps_button{
+	width:70px;
+	height:30px;
+	font-size: 14px;
+	display: inline-block;
+	background-color: #FF6C60;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 540px;
+	margin-bottom: 10px;
+	margin-top:10px;
+	top:0;
+	position: static;
+}
+.pickup_button{
+	margin-left: 300px;
+}
+.pp_button,.ps_button{
+	margin:0 0 75px 150px;
+}
+.button_con{
+	color: #fff;
+	display: inline-block;
+}
+.button_con a,.add_button_con a{
+	width:198px;
+	height:30px;
+	display: inline-block;
+	color: #fff;
+}
+.state input{
+	width:375px;
+	height:30px;
+}
+.state img,.belongs_merchant img{
+	width: 18px;
+	height: 20px;
+	margin-left: -30px;
+	cursor: pointer;
+}
+.state img{position:absolute; top:5px; right:5px;margin-left: 0px;}
+div.state_list{
+	width:380px;
+	border:1px solid #ccc;
+	margin: 0px;
+	position: absolute;
+	top:30px;
+	left:63px;
+	background-color: #fff;
+	display: none;
+	z-index:1;
+}
+.state_list span{
+	width:90px;
+	display: inline-block;
+	margin: 5px 0px;
+}
+.state_list input{
+	width: 14px;
+	height: 14px;
+}
+div.up_show{
+	display: block;
+}
+.add{
+	background-color:#fff;
+}
+.add .button{
+	width:100px;
+	height:30px;
+	margin: 0px 0px 10px 20px;
+}
+.contont_list{
+	width:1160px;
+	font-size: 12px;
+	color:#666;
+	position: relative;
+	background: #fff;
+	height: 35px;
+	padding:5px 20px;
+}
+.contont_list_title{
+	background: #f2f2f2;
+	width: 1160px;
+	height: 35px;
+	line-height: 35px;
+}
+.contont_list_title div{
+	display:inline-block;
+}
+.contont_list_major{
+	padding:13px 0px;
+}
+.contont_list_major div{
+	display: inline-block;
+	vertical-align: middle;
+}
+.contract_list_title div,.contract_list_major div{
+	display: inline-block;
+	width:150px;
+	height:30px;
+}
+div.icon1{
+	width:1%;
+	height:11px;
+	margin-right:10px;
+}
+div.icon{
+	width:1%;
+	height:11px;
+	
+	margin-right:10px;
+}
+div.icon_bg{
+	background:url(../image/u242.png);
+}
+.contont_list_detail{
+	display: none;
+	position:relative;
+	padding:10px 50px;
+	background-color:#F8F8F8;
+}
+.contont_list_detail_title span{
+	width:70px;
+	height:30px;
+	line-height: 30px;
+	display: inline-block;
+	border-right: 1px solid #ccc;
+	text-align: center;
+	cursor: pointer;
+}
+span.contont_list_detail_audit{
+	border-right:0px;
+}
+span.click_contont_list_detail_shop{
+	font-weight: 700;
+	border:1px solid #ccc;
+	border-bottom: 0px;
+	border-right:1px solid #ccc;
+}
+.table_1 table{
+	width:1160px;
+	font-size:12px;
+}
+.short_sever table{
+	width:1105px;
+}
+tr{
+	height:30px;
+}
+.allcheck,.box{
+	margin-left:10px;
+}
+.fj{
+	color:#2F88D0;
+	cursor:pointer;
+}
+.fj_list{
+	width:980px;
+}
+.fj_list span{
+	margin:0px 5px;
+}
+.fj_detail{
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+.fj_detail img{
+	width:500px;
+	height:auto;
+}
+.shop_list,.infor_list,.contract_list,.record_list,.audit_record_list,.handle_list{
+	display: none;
+	height: 230px;
+	overflow-y:auto;
+}
+.contont_list_detail table{
+	table-layout: fixed;
+	width:1000px;
+	margin-bottom:20px;
+}
+span.now,span.totel{
+	width:5px;
+}
+span.now{
+	color:#FF6C60;
+}
+span.change{
+	border:1px solid #ccc;
+	display:inline-block;
+	margin:0px 5px;
+}
+.totel_page{
+	position: relative;
+}
+.totel_page span{
+	width:24px;
+	height:22px;
+	display: inline-block;
+	text-align: center;
+	line-height: 22px;
+	cursor: pointer;
+}
+.totel_now{
+	background-color: #FF6C60;
+	color:#fff;
+}
+.totel_page input{
+	width: 40px;
+	height: 25px;
+}
+span.totel_page_sure{
+	width:40px;
+	height:25px;
+	background-color: #E4E4E4;
+	border-radius: 5px;
+}
+span.page_sure{
+	background-color: #FF6C60;
+	border-radius: 5px;
+	color:#fff;
+}
+.totel_page{
+	margin-left: 800px;
+}
+span.noclick{
+	cursor:auto;
+}
+.choice{
+	position: relative;
+	width:1160px;
+	padding:10px 20px;
+	background:#fff;
+}
+.choice table{
+	margin:0;
+	width:1160px;
+}
+.contont_list_con,.infor_list td,.record_list td{
+	border-bottom:1px solid #EBEBEB;
+}
+.contont_list_major a{
+	color:#3D99F2;
+}
+.editStore{
+	cursor:pointer;
+}
+span.shop_inf,span.run_inf,span.legal_inf,span.contact_inf{
+	border-right:0;
+	cursor:default;
+}
+span.shop_inf td{
+	width:180px;
+}
+.shop_inf span,.run_inf span,.legal_inf span,.contact_inf span{
+	font-weight:700;
+	border-right:0;
+	cursor:default;
+}
+.shop_inf table,.run_inf table,.legal_inf table,.contact_inf table{
+	margin:0;
+	width:325px;
+	text-align:left;
+}
+.shop_inf table td{
+	width:30px;
+}
+.contact_inf td{
+	width:28px;
+}
+.run_inf{
+	margin-left:300px;
+	width:300px
+}
+.run_inf_con{
+	width:61px;
+}
+.legal_inf_con{
+	width:85px;
+}
+.legal_inf{
+	position: relative;
+	top: 80px;
+	left: -75px;
+	width:300px
+}
+.contact_inf{
+	position:relative;
+	top:0px;
+	left:150px
+}
+.contract_name,.contract_short_name{
+	margin:0px 200px;
+}
+.time span{
+	margin-top:10px;
+}
+.contont_list_content{
+	background-color:#fff;
+	padding:5px 20px
+}
+.choice_title{
+	background:#F2F2F2;
+}
+.choice_title .icon{width:35px;text-align: center;}
+.short{
+	margin-right:250px;
+}
+.product_apply{
+	table-layout: fixed;
+	width:1160px;
+	margin:0 auto;
+	font-size:12px;
+}
+.choice td{
+	border-bottom:1px solid #ebebeb;
+	padding: 13px 0px;
+}
+.operating_state1 select{
+	width:135px;
+	height:30px;
+}
+.audit_list .shop_place,.audit_product .shop_place{
+	margin:20px 130px 0 0;	
+}
+.audit_list .shop_name,.audit_product .shop_name{
+	margin:20px 360px 0 0;
+}
+.audit_list .approval_button{
+	position:absolute;
+	top:40px;
+	right:100px;
+}
+.audit_product .first_server{
+	margin:20px 340px 0 0;
+}
+.audit_product .approval_button{
+	position:absolute;
+	top:80px;
+	right:100px;
+}
+
+.pages_number{
+	float:right;
+	margin-right:40px;
+	font-weight:400;
+}
+.pages_number select{
+	width:110px;
+	height:20px;
+}
